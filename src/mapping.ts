@@ -23,7 +23,11 @@ export function handleApproval(event: Approval): void {
   let polymathFinance = PolymathFinance.bind(event.address)
   let contract = new Contract(event.params.spender.toHexString())
 
+  contract.name = polymathFinance.name()
+  contract.symbol = polymathFinance.symbol()
+  contract.totalSupply = polymathFinance.totalSupply()
   
+  contract.save()
 
 } 
 export function handleExcludeFromFees(event: ExcludeFromFees): void {}
