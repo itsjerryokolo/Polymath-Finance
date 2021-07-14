@@ -1,0 +1,65 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: PolymathFinance
+    network: matic
+    source:
+      address: "0x0aff058e91dc7c74c5e5f8aeb6f209b53e3b4681"
+      abi: PolymathFinance
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ExcludeFromFees
+        - ExcludeMultipleAccountsFromFees
+        - GasForProcessingUpdated
+        - LiquidityWalletUpdated
+        - OwnershipTransferred
+        - ProcessedDividendTracker
+        - SendDividends
+        - SetAutomatedMarketMakerPair
+        - SwapAndLiquify
+        - SwapAndLiquifyEnabledUpdated
+        - SwapETHForTokens
+        - Transfer
+        - UpdateDividendTracker
+        - UpdateUniswapV2Router
+      abis:
+        - name: PolymathFinance
+          file: ./abis/PolymathFinance.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: ExcludeFromFees(indexed address,bool)
+          handler: handleExcludeFromFees
+        - event: ExcludeMultipleAccountsFromFees(address[],bool)
+          handler: handleExcludeMultipleAccountsFromFees
+        - event: GasForProcessingUpdated(indexed uint256,indexed uint256)
+          handler: handleGasForProcessingUpdated
+        - event: LiquidityWalletUpdated(indexed address,indexed address)
+          handler: handleLiquidityWalletUpdated
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: ProcessedDividendTracker(uint256,uint256,uint256,indexed bool,uint256,indexed address)
+          handler: handleProcessedDividendTracker
+        - event: SendDividends(indexed uint256,indexed uint256,indexed uint256,uint256)
+          handler: handleSendDividends
+        - event: SetAutomatedMarketMakerPair(indexed address,indexed bool)
+          handler: handleSetAutomatedMarketMakerPair
+        - event: SwapAndLiquify(uint256,uint256,uint256)
+          handler: handleSwapAndLiquify
+        - event: SwapAndLiquifyEnabledUpdated(bool)
+          handler: handleSwapAndLiquifyEnabledUpdated
+        - event: SwapETHForTokens(uint256,address[])
+          handler: handleSwapETHForTokens
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: UpdateDividendTracker(indexed address,indexed address)
+          handler: handleUpdateDividendTracker
+        - event: UpdateUniswapV2Router(indexed address,indexed address)
+          handler: handleUpdateUniswapV2Router
+      file: ./src/mapping.ts
